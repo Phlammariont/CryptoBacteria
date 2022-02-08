@@ -1,0 +1,32 @@
+<svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+        <circle id="circleShape" cx="400" cy="300" r="200" className="circleShape"/>
+        <clipPath id="circleMask">
+            <use className="useMask" xlink:href="#circleShape"/>
+        </clipPath>
+        <circle cx="0" cy="0" r="0" className="cell"/>
+        <filter id="goo">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="8" result="blur"/>
+            <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 21 -5" result="cm"/>
+            <feBlend/>
+        </filter>
+
+        <filter id="cellFilter" x="-10%" y="-10%" width="200%" height="200%">
+            <feGaussianBlur in="SourceAlpha" stdDeviation="3" result="blur"/>
+            <feSpecularLighting in="blur" surfaceScale="60" specularConstant="0.5" specularExponent="10"
+                                result="lightingOut" lighting-color="#FFF">
+                <fePointLight x="0" y="0" z="2000"/>
+            </feSpecularLighting>
+            <feComposite in="lightingOut" in2="SourceAlpha" operator="in" result="compOut"/>
+            <feComposite in="SourceGraphic" in2="compOut" operator="arithmetic" k1="0" k2="1" k3="1" k4="0"/>
+        </filter>
+    </defs>
+    <g filter="url(#cellFilter)" clip-path="url(#circleMask)">
+        <g className="wholeCell" filter="url(#goo)">
+        </g>
+        <use xlink:href="#circleShape" fill="rgba(255,255,255,0.05)" stroke="#fff" stroke-width="0"/>
+    </g>
+
+    <use xlink:href="#circleShape" fill="none" stroke="#fff" stroke-width="6"/>
+
+</svg>
